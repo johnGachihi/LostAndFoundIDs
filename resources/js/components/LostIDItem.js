@@ -18,7 +18,7 @@ import {
 } from "@material/react-typography";
 
 // import IconButton from '@material/react-icon-button';
-// import MaterialIcon from '@material/react-material-icon';
+import MaterialIcon from '@material/react-material-icon';
 import List, {ListItem, ListItemText} from '@material/react-list';
 
 import '@material/react-typography/dist/typography.css';
@@ -34,11 +34,37 @@ export default class LostIDItem extends React.Component {
         return (
             <Card className={"mdc-card"}>
                 <div className={"my-2 ml-2 mr-3"}>
-                    <div className={"d-flex"}>
-                        <Subtitle2 className={"mr-1 m-0"} style={{alignSelf: "center", color: "#646464"}}>{"ID number: "}</Subtitle2>
-                        <Headline6 className={"mb-0"} style={{color: "#646464"}}>123456</Headline6>
+                    <div className={"d-flex justify-content-between"}>
+                        <div className={"flex-grow-1"}>
+                            <div className={"d-flex"}>
+                                <Subtitle2 className={"mr-1 m-0 text-primary"}
+                                           style={{alignSelf: "center", color: "#646464"}}>{"ID number: "}</Subtitle2>
+                                <Headline6 className={"mb-0"}
+                                           style={{color: "#646464"}}>{this.props.IDNumber}</Headline6>
+                            </div>
+                            <div className={"d-flex"}>
+                                <MaterialIcon className={"text-primary mr-2"} icon={"phone"}/>
+                                <Subtitle2 style={{color: "#646464"}}>{this.props.finderPhoneNumber}</Subtitle2>
+                            </div>
+                        </div>
+                        <div className="mdc-card__action-icons">
+                            <Popup
+                                trigger={open => (
+                                    <button
+                                        className="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon--unbounded"
+                                        title="More options" data-mdc-ripple-is-unbounded="true">more_vert</button>
+                                )}
+                                position="left center"
+                                closeOnDocumentClick
+                            >
+                                <List>
+                                    <ListItem>
+                                        <ListItemText primaryText='Remove Item'/>
+                                    </ListItem>
+                                </List>
+                            </Popup>
+                        </div>
                     </div>
-                    <Subtitle2 style={{color: "#646464"}}>Call: 0712 124 512</Subtitle2>
                 </div>
                 <CardPrimaryContent>
                     <CardMedia wide imageUrl={"/storage/dummy.png"}/>
@@ -46,23 +72,7 @@ export default class LostIDItem extends React.Component {
 
 
                 <CardActions className={"m-0 p-0"}>
-                    <div className="mdc-card__action-icons">
-                        <Popup
-                            trigger={open => (
-                                <button
-                                    className="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon--unbounded"
-                                    title="More options" data-mdc-ripple-is-unbounded="true">more_vert</button>
-                            )}
-                            position="right center"
-                            closeOnDocumentClick
-                        >
-                            <List>
-                                <ListItem>
-                                    <ListItemText primaryText='Remove Item'/>
-                                </ListItem>
-                            </List>
-                        </Popup>
-                    </div>
+
                 </CardActions>
             </Card>
         )

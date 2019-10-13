@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('lost-and-found-ids/{id_number}', 'LostIDsController@getLostId')
+    ->where('id_number', '[0-9]+');
+Route::get('lost-and-found-ids', 'LostIDsController@getAll');
+
 Route::view('/{path?}', 'welcome')
     ->where('path', '.*');
 

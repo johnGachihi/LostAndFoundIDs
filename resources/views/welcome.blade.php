@@ -22,7 +22,7 @@
 
     <script>
         const ASSETS_URL = {!! json_encode(asset('/dummy.png')) !!};
-        console.log(ASSETS_URL)
+        console.log(APP_URL)
     </script>
 </head>
 

@@ -11,16 +11,17 @@ import Navbar from "react-bootstrap/Navbar";
 export default class MyNavbar extends React.Component{
     render() {
         return (
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="light" expand="lg" class={"justify-content-between"}>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         {React.Children.map(this.props.children, child => <Nav.Link>{child}</Nav.Link>)}
                     </Nav>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-success">Search</Button>
-                    </Form>
+                    {/*<Navbar.Brand>Lost And Found Ids</Navbar.Brand>*/}
+                    {this.props.showSearchBar && <Form inline>
+                        <FormControl type="text" placeholder="Search ID Number" className="mr-sm-2" />
+                        <Button variant="outline-primary">Search</Button>
+                    </Form>}
                 </Navbar.Collapse>
             </Navbar>
         );
