@@ -5,52 +5,27 @@ import {
 } from "react-router-dom"
 import MyNavbar from "./MyNavbar";
 import Home from "./Home";
+import Upload from "./Upload";
 
 export default class Main extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {showSearchBar: false};
-        this.onSetShowSearchBar = this.onSetShowSearchBar.bind();
-    }
-
-    onSetShowSearchBar(show) {
-        this.setState({showSearchBar: show})
     }
 
     render() {
         return (
             <Router basename={"index.php"}>
                 <div>
-                    <MyNavbar showSearchBar={this.state.showSearchBar}>
-                        <Link to={"/"}>Home</Link>
-                        <Link to={'/upload'}>Upload An ID</Link>
-                    </MyNavbar>
-
                     <Switch>
                         <Route path={"/upload"}>
                             <Upload/>
                         </Route>
                         <Route path="/">
-                            <Home setShowSearchBar={this.onSetShowSearchBar}/>
+                            <Home />
                         </Route>
                     </Switch>
                 </div>
             </Router>
         );
     }
-
 }
-
-function Upload() {
-    return (
-        <div>
-            <h1>Upload</h1>
-        </div>
-    )
-}
-
-// function Home() {
-//     return (
-        {/*<h1>Home</h1>*/}
-    // )
-// }

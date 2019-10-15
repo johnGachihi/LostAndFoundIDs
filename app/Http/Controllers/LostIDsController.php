@@ -14,4 +14,8 @@ class LostIDsController extends Controller
     function getAll() {
         return LostId::all();
     }
+
+    function createLostId() {
+
+    }
 }
