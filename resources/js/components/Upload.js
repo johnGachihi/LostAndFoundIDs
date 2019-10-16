@@ -190,7 +190,8 @@ async function postData(url = "", data = {}) {
     const response = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": 'application/json'
+            "Content-Type": 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         body: JSON.stringify(data)
     });
