@@ -21,6 +21,10 @@ class EmailVerificationTokenController extends Controller
 
         Mail::to($request->input("uploaderEmail"))
             ->send(new VerifyEmail($emailVerificationToken));
+
+        return response()->json([
+            'error' => false
+        ]);
     }
 
     private function validateEmailInput($input) {
@@ -46,4 +50,5 @@ class EmailVerificationTokenController extends Controller
     private function generateToken() {
         return uniqid();
     }
+
 }

@@ -13,6 +13,8 @@
 
 Route::post('upload-lost-id/uploader-email', 'EmailVerificationTokenController@verifyEmail');
 
+Route::post('upload-lost-id/id-data', 'LostIDsController@createLostId');
+
 Route::get('lost-and-found-ids/{id_number}', 'LostIDsController@getLostId')
     ->where('id_number', '[0-9]+');
 Route::get('lost-and-found-ids', 'LostIDsController@getAll');

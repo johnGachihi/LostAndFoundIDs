@@ -9,20 +9,34 @@ import {Formik} from "formik";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "@material/react-dialog/dist/dialog.css";
-
-import Dialog, {
-    DialogTitle,
-    DialogContent,
-    DialogFooter,
-    DialogButton,
-} from '@material/react-dialog';
 import {BASE_URL} from "../constants/constants";
+import EmailVerificationDialog from "./EmailVerificationDialog";
 
 export default class Upload extends React.Component{
     constructor(props) {
         super(props);
 
-        this.state = { dialogOpen: false }
+        this.state = { dialogOpen: false, loading: false, tokenInput: '', values: {} };
+
+        this.submitDataWithToken = this.submitDataWithToken.bind(this);
+    }
+
+    submitDataWithToken(token) {
+        const {values} = this.state;
+        const formData = new FormData();
+        formData.set("idNumber", values.idNumber);
+        formData.set("idImage", values.idImage, values.idImage.name);
+        formData.set("phoneNumberToBeCalled", values.phoneNumberToBeCalled);
+        formData.set("placeFound", values.placeFound);
+        formData.set("uploaderEmail", values.uploaderEmail);
+        formData.set("token", token);
+
+
+        // const formData = this.state.values;
+        console.log('submitDataWithToken', formData);
+        // formData['token'] = token;
+        postData2(BASE_URL + "/upload-lost-id/id-data", formData)
+            .then(console.log);
     }
 
     render() {
@@ -42,14 +56,15 @@ export default class Upload extends React.Component{
                                     idImage: '',
                                     phoneNumberToBeCalled: '1234567890',
                                     placeFound: 'ghjkl',
-                                    uploaderEmail: 'tyui@gmail.com'
+                                    uploaderEmail: 'johngachihi3@gmail.com'
                                 }}
                                 onSubmit={((values, formikActions) => {
                                     console.log(values);
+                                    this.setState({dialogOpen: true, loading: true, values});
                                     postData(BASE_URL + "/upload-lost-id/uploader-email", values)
                                         .then(res => {
                                             console.log(res);
-                                            this.setState({dialogOpen: true})
+                                            this.setState({loading: false})
                                         });
                                 })}
                             >
@@ -60,7 +75,8 @@ export default class Upload extends React.Component{
                                       values,
                                       touched,
                                       isValid,
-                                      errors,
+                                      setFieldValue,
+                                      errors
                                   }) => (
                                     <Form noValidate onSubmit={handleSubmit} className={"w-100"}>
                                         <Form.Group>
@@ -82,8 +98,8 @@ export default class Upload extends React.Component{
                                             <Form.Control
                                                 type={"file"}
                                                 name={"idImage"}
-                                                value={values.idImage}
-                                                onChange={handleChange}
+                                                // value={values.idImage}
+                                                onChange={e => {setFieldValue("idImage", e.currentTarget.files[0]); console.log(values);}}
                                                 isInvalid={!!errors.idImage && touched.idImage}
                                             />
                                             <Form.Control.Feedback type={"invalid"}>
@@ -133,6 +149,8 @@ export default class Upload extends React.Component{
                                             </Form.Control.Feedback>
                                         </Form.Group>
 
+                                        <input type={"text"} name={"token"} value={this.state.tokenInput}/>
+
                                         {/*<MyFormControl
                                             label={"Uploader's email"}
                                             type={"text"}
@@ -153,16 +171,22 @@ export default class Upload extends React.Component{
                     </Row>
                 </Container>
 
-                <Dialog open={this.state.dialogOpen} onClose={() => this.setState({dialogOpen: false})}>
+                <EmailVerificationDialog
+                    dialogOpen={this.state.dialogOpen}
+                    onDialogClose={() => this.setState({dialogOpen: false})}
+                    loading={this.state.loading}
+                    onClickAccept={(tokenInput) => this.submitDataWithToken(tokenInput)}
+                />
+                {/*<Dialog open={this.state.dialogOpen} onClose={() => this.setState({dialogOpen: false})}>
                     <DialogTitle>My Dialog</DialogTitle>
                     <DialogContent>
                         <input type={"text"} />
                     </DialogContent>
                     <DialogFooter>
                         <DialogButton action='dismiss'>Dismiss</DialogButton>
-                        <DialogButton action='accept' isDefault>Accept</DialogButton>
+                        <DialogButton isDefault>Accept</DialogButton>
                     </DialogFooter>
-                </Dialog>
+                </Dialog>*/}
             </div>
         );
     }
@@ -189,7 +213,9 @@ const validationSchema = Yup.object().shape({
 async function postData(url = "", data = {}) {
     const response = await fetch(url, {
         method: "POST",
+        // mode: "no-cors",
         headers: {
+            "Accept": 'application/json',
             "Content-Type": 'application/json',
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -197,4 +223,14 @@ async function postData(url = "", data = {}) {
     });
 
     return await response.json()
+}
+
+async function postData2(url, data) {
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        body: data
+    })
 }
