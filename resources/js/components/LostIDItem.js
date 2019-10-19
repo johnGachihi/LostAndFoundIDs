@@ -26,6 +26,7 @@ import '@material/react-card/dist/card.css';
 import '@material/react-material-icon/dist/material-icon.css';
 import '@material/react-icon-button/dist/icon-button.css';
 import '@material/react-list/dist/list.css';
+import {VERY_BASE_URL} from "../constants/constants";
 // import '@material/react-button/dist/button.css';
 // import Button from '@material/react-button';
 
@@ -67,7 +68,7 @@ export default class LostIDItem extends React.Component {
                     </div>
                 </div>
                 <CardPrimaryContent>
-                    <CardMedia wide imageUrl={`http://localhost/storage/id-images/${this.props.idImage}`}/>
+                    <CardMedia wide imageUrl={`${VERY_BASE_URL}/storage/id-images/${this.props.idImage}`}/>
                 </CardPrimaryContent>
             </Card>
         )
