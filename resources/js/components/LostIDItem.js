@@ -67,7 +67,7 @@ export default class LostIDItem extends React.Component {
                     </div>
                 </div>
                 <CardPrimaryContent>
-                    <CardMedia wide imageUrl={"/storage/dummy.png"}/>
+                    <CardMedia wide imageUrl={`http://localhost/storage/id-images/${this.props.idImage}`}/>
                 </CardPrimaryContent>
             </Card>
         )

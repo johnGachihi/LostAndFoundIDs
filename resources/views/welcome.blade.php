@@ -24,7 +24,10 @@
 
     <script>
         const ASSETS_URL = {!! json_encode(asset('/dummy.png')) !!};
-        console.log(APP_URL)
+        console.log(ASSETS_URL)
+
+        const STORAGE_URL = {!! json_encode(asset('ble.png')) !!}
+        console.log(STORAGE_URL);
     </script>
 </head>
 

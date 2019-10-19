@@ -47,7 +47,9 @@ export default class Home extends React.Component{
                     {this.state.lostIDs.map((lostID, i) => (
                         <Cell desktopColumns={4} tabletColumns={4} phoneColumns={4}>
                             <LostIDItem IDNumber={lostID['id_number']}
-                                        finderPhoneNumber={lostID['finder_phone_number']}/>
+                                        finderPhoneNumber={lostID['finder_phone_number']}
+                                        idImage={lostID['image']}
+                            />
                         </Cell>
                     ))}
                 </ReactRow>

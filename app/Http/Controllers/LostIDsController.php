@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class LostIDsController extends Controller
 {
-    const IMAGES_FOLDER = 'id-images';
+    const IMAGES_FOLDER = 'public/id-images';
 
     function getLostId($id_number) {
         return LostId::where("id_number", $id_number)->get();
