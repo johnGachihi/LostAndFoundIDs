@@ -69,7 +69,7 @@ export default class Home extends React.Component{
                             <h1>Lost and Found IDs</h1>
                         </div>
                     </Row>*/}
-                    <CenteredPageTitle title={"Lost and Found IDs"} />
+                    <CenteredPageTitle title={"Lost and Found Ids"} />
                     <Row>
                         {/* Grid Comes in here */}
                         {/* <LostIDsGrid lostIDItems={... } /> */}
