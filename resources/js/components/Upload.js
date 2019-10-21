@@ -9,7 +9,6 @@ import {Formik} from "formik";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "@material/react-dialog/dist/dialog.css";
-import {BASE_URL} from "../constants/constants";
 import EmailVerificationDialog from "./EmailVerificationDialog";
 
 export default class Upload extends React.Component{
@@ -35,7 +34,7 @@ export default class Upload extends React.Component{
         // const formData = this.state.values;
         console.log('submitDataWithToken', formData);
         // formData['token'] = token;
-        postData2(BASE_URL + "/upload-lost-id/id-data", formData)
+        postData2(APP_URL + "/upload-lost-id/id-data", formData)
             .then(console.log);
     }
 
@@ -61,7 +60,7 @@ export default class Upload extends React.Component{
                                 onSubmit={((values, formikActions) => {
                                     console.log(values);
                                     this.setState({dialogOpen: true, loading: true, values});
-                                    postData(BASE_URL + "/upload-lost-id/uploader-email", values)
+                                    postData(APP_URL + "/upload-lost-id/uploader-email", values)
                                         .then(res => {
                                             console.log(res);
                                             this.setState({loading: false})

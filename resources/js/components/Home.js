@@ -5,7 +5,6 @@ import LostIDItem from "./LostIDItem";
 import {Cell, Grid, Row as ReactRow} from "@material/react-layout-grid";
 import '@material/react-layout-grid/dist/layout-grid.css';
 import MyNavbar from "./MyNavbar";
-import {BASE_URL} from "../constants/constants";
 import CenteredPageTitle from "./CenteredPageTitle";
 
 export default class Home extends React.Component{
@@ -31,7 +30,7 @@ export default class Home extends React.Component{
         // Its as though the searchQuery state is not set before this method
         // is called in the doSearch method
         // console.log("fetchLostIds function", this.state.searchQuery);
-        fetch(BASE_URL + "/lost-and-found-ids/" + searchQuery)
+        fetch(APP_URL + "/lost-and-found-ids/" + searchQuery)
             .then(res => res.json())
             .then(lostIDs => this.setState({lostIDs}))
     }

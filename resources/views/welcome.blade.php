@@ -19,7 +19,11 @@
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <script>
+        {{--const APP_URL = {!! json_encode(url('/')) !!};--}}
+        const BASE_URL = "{{ env('APP_URL') }}";
+
         const APP_URL = {!! json_encode(url('/')) !!};
+        console.log(APP_URL)
     </script>
 
     <script>
