@@ -15,7 +15,13 @@ export default class Upload extends React.Component{
     constructor(props) {
         super(props);
 
-        this.state = { dialogOpen: false, loading: false, tokenInput: '', values: {} };
+        this.state = {
+            dialogOpen: false,
+            loading: false,
+            tokenInput: '',
+            values: {},
+            dialogStatus: 'loading'  //'loading', 'input', 'success', 'failure'
+        };
 
         this.submitDataWithToken = this.submitDataWithToken.bind(this);
     }
@@ -35,7 +41,14 @@ export default class Upload extends React.Component{
         console.log('submitDataWithToken', formData);
         // formData['token'] = token;
         postData2(APP_URL + "/upload-lost-id/id-data", formData)
-            .then(console.log);
+            .then(response => {
+                console.log(response);
+                this.setState({dialogStatus: 'success'})
+            })
+            .catch(err => {
+                console.log('Error body', err.body);
+                this.setState({ dialogStatus: 'failure' })
+            })
     }
 
     render() {
@@ -59,11 +72,11 @@ export default class Upload extends React.Component{
                                 }}
                                 onSubmit={((values, formikActions) => {
                                     console.log(values);
-                                    this.setState({dialogOpen: true, loading: true, values});
+                                    this.setState({dialogOpen: true, loading: true, values, dialogStatus: 'loading'});
                                     postData(APP_URL + "/upload-lost-id/uploader-email", values)
                                         .then(res => {
                                             console.log(res);
-                                            this.setState({loading: false})
+                                            this.setState({ loading: false, dialogStatus: 'input' })
                                         });
                                 })}
                             >
@@ -148,7 +161,7 @@ export default class Upload extends React.Component{
                                             </Form.Control.Feedback>
                                         </Form.Group>
 
-                                        <input type={"text"} name={"token"} value={this.state.tokenInput}/>
+                                        {/*<input type={"text"} name={"token"} value={this.state.tokenInput}/>*/}
 
                                         {/*<MyFormControl
                                             label={"Uploader's email"}
@@ -175,6 +188,7 @@ export default class Upload extends React.Component{
                     onDialogClose={() => this.setState({dialogOpen: false})}
                     loading={this.state.loading}
                     onClickAccept={(tokenInput) => this.submitDataWithToken(tokenInput)}
+                    status={this.state.dialogStatus}
                 />
                 {/*<Dialog open={this.state.dialogOpen} onClose={() => this.setState({dialogOpen: false})}>
                     <DialogTitle>My Dialog</DialogTitle>
@@ -231,5 +245,14 @@ async function postData2(url, data) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         body: data
-    })
+    });
+    const result = await response.json();
+
+    if(! response.ok) throw new RequestError(result);
+
+    return response;
+}
+
+function RequestError(requestBody) {
+    this.body = requestBody;
 }
