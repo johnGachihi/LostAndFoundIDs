@@ -26,7 +26,6 @@ import '@material/react-card/dist/card.css';
 import '@material/react-material-icon/dist/material-icon.css';
 import '@material/react-icon-button/dist/icon-button.css';
 import '@material/react-list/dist/list.css';
-import {VERY_BASE_URL} from "../constants/constants";
 // import '@material/react-button/dist/button.css';
 // import Button from '@material/react-button';
 
