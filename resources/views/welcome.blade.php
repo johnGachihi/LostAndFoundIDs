@@ -22,7 +22,7 @@
         {{--const APP_URL = {!! json_encode(url('/')) !!};--}}
         const BASE_URL = "{{ env('APP_URL') }}";
 
-        const APP_URL = {!! json_encode(url('/')) !!};
+        const APP_URL = `${BASE_URL}/index.php`;
         console.log(APP_URL)
     </script>
 
